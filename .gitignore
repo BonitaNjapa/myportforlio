@@ -91,3 +91,5 @@ UpgradeLog*.XML
 src/.vs/config/applicationhost.config
 
 .idea/
+
+.fake
