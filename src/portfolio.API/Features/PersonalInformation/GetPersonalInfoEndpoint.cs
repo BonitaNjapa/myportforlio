@@ -1,7 +1,7 @@
 using FastEndpoints;
 
 
-namespace portfolio.API.Features.PersonalInfomation;
+namespace portfolio.API.Features.PersonalInformation;
 
 public sealed class GetPersonalInfoEndpoint : EndpointWithoutRequest<GetPersonalInfoResponse>
 {
