@@ -10,6 +10,8 @@ Configuration.AddEnvironmentBasedJsonFile(builder.Environment);
 builder.Services.AddCustomDbContext(configuration:Configuration);
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+    
+builder.Services.AddCarter();
 
 var app = builder.Build();
 
