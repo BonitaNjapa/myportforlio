@@ -6,7 +6,6 @@ using portfolio.API.Entities.PersonalInfo;
 public class PortfolioDbContext : DbContext
 {
     public PortfolioDbContext(DbContextOptions<PortfolioDbContext> options) : base(options) { }
-        public DbSet<PersonalInformation> PersonalInfos { get; set; }
-
+        public DbSet<Person> PersonalInfos { get; set; }
 }
 
