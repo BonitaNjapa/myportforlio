@@ -67,7 +67,8 @@
                 "mtxr.sqltools",
                 "rangav.vscode-thunder-client",
                 "Gruntfuggly.todo-tree",
-                "fernandoescolar.vscode-solution-explorer"
+                "fernandoescolar.vscode-solution-explorer",
+                "cweijan.vscode-postgresql-client2"
             ]
         }
     }
