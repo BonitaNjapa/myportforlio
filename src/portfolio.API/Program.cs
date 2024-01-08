@@ -1,23 +1,20 @@
 using FastEndpoints;
-using portfolio.API.Database;
-using Microsoft.EntityFrameworkCore;
-using portfolio.API.Helpers;
+using portfolio.API.Helpers.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 var Configuration = builder.Configuration;
 
-var dbSettings = Configuration.GetSection("ConnectionStrings:DefaultConnection").Get<DatabaseSettings>();
+Configuration.AddEnvironmentBasedJsonFile(builder.Environment);
 
-builder.Services.AddDbContext<PortfolioDbContext>(options =>
-        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddCustomDbContext(configuration:Configuration);
 
 builder.Services.AddFastEndpoints();
 
 var app = builder.Build();
 
 app.CheckDatabaseConnection();
+
 app.UseFastEndpoints();
 
 app.MapGet("/", () => "Hello World!");
