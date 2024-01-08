@@ -9,8 +9,8 @@ public class Endpoint : ICarterModule
     {
         app.MapGet("api/person", async (ISender sender) =>
        {
-           var books = await sender.Send(new Query());
-           return Results.Ok(books);
+           var people = await sender.Send(new Query());
+           return Results.Ok(people);
        });
     }
 }
