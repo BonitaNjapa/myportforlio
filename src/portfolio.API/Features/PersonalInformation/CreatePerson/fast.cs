@@ -20,15 +20,14 @@ public class MyEndpoint : Endpoint<MyRequest, MyResponse>
 
     public override async Task HandleAsync(MyRequest req, CancellationToken ct)
     {
-
         var command = new CreateCommand
-        {
-            first_name = req.First_name,
-            last_name = req.Last_name,
-            date_of_birth = req.Date_of_birth,
-            gender = req.Gender,
-            ethnicity = req.Ethnicity
-        };
+        (
+            first_name : req.First_name,
+            last_name : req.Last_name,
+            date_of_birth : req.Date_of_birth,
+            gender : req.Gender,
+            ethnicity : req.Ethnicity
+        );
 
           var personId = await _sender.Send(command);
 

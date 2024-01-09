@@ -22,6 +22,7 @@ internal sealed class Handler : IRequestHandler<CreateCommand, int>
             gender = req.gender,
             ethnicity = req.ethnicity
         };
+        
         await _dbContext.AddAsync(person, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
         return person.personal_info_id;
