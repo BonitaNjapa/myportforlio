@@ -16,6 +16,7 @@ namespace portfolio.API.Features.PersonalInformation.GetPersonById
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                     return Results.NotFound();
                 }
 

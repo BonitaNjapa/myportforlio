@@ -7,6 +7,7 @@ namespace portfolio.API.Entities.PersonalInfo;
 public class Person
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int personal_info_id { get; set; }
     public required string first_name { get; set; }
     public required string last_name { get; set; }
