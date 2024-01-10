@@ -1,9 +1,9 @@
-using MediatR;
-using portfolio.API.Entities.PersonalInfo;
+// using MediatR;
+// using portfolio.API.Entities.PersonalInfo;
 
-namespace portfolio.API.Features.PersonalInformation.GetAllPersons;
+// namespace portfolio.API.Features.PersonalInformation.GetAllPersons;
 
-public sealed record Query : IRequest<List<Person>>
-{
-}
+// public sealed record Query : IRequest<List<Person>>
+// {
+// }
 

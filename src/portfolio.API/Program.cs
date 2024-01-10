@@ -26,6 +26,6 @@ app.UseFastEndpoints();
 
 app.MapCarter();
 
-app.MapGet("/", async (PortfolioDbContext dbContext) =>  Results.Ok(await dbContext.PersonalInfos.ToListAsync()));
+app.MapGet("/", async (PortfolioDbContext dbContext) =>  Results.Ok(await dbContext.Users.ToListAsync()));
 
 app.Run();

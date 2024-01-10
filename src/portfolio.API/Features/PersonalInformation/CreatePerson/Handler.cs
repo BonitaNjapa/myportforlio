@@ -1,31 +1,28 @@
 using MediatR;
 using portfolio.API.Database;
-using portfolio.API.Entities.PersonalInfo;
+using portfolio.API.Entities.User;
 
 namespace portfolio.API.Features.PersonalInformation.CreatePerson;
 
 
-internal sealed class Handler : IRequestHandler<CreateUserCommand, int>
+internal sealed class Handler : IRequestHandler<CreateUserCommand, Guid>
 {
     private readonly PortfolioDbContext _dbContext;
-    public Handler(PortfolioDbContext dbContext)
+    public Handler(PortfolioDbContext dbContext) => _dbContext = dbContext;
+    public async Task<Guid> Handle(CreateUserCommand req, CancellationToken cancellationToken)
     {
-        _dbContext = dbContext;
-    }
-    public async Task<int> Handle(CreateUserCommand req, CancellationToken cancellationToken)
-    {
-        var person = new Person()
+        var person = new User()
         {
-            first_name = req.first_name,
-            last_name = req.last_name,
-            date_of_birth = req.date_of_birth,
-            gender = req.gender,
-            ethnicity = req.ethnicity
+            Username = req.Username,
+            FirstName = req.FirstName,
+            LastName = req.LastName,
+            MiddleName = req.MiddleName,
+            Email = req.Email
         };
-        
+
         await _dbContext.AddAsync(person, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-        return person.personal_info_id;
+        return person.Id;
     }
 
 

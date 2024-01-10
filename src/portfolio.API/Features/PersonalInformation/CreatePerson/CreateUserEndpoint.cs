@@ -6,7 +6,7 @@ using portfolio.API.Shared;
 
 namespace portfolio.API.Features.PersonalInformation.CreatePerson;
 
-public class CreateUserEndpoint : Endpoint<CreateUserRequest,  Results<CreateUserResponse>>
+public class CreateUserEndpoint : Endpoint<CreateUserRequest, Results<CreateUserResponse>>
 {
     private ISender _sender;
 
@@ -24,24 +24,24 @@ public class CreateUserEndpoint : Endpoint<CreateUserRequest,  Results<CreateUse
     {
         var command = new CreateUserCommand
         (
-            first_name : req.FirstName,
-            last_name : req.LastName,
-            date_of_birth : req.DateOfBirth,
-            gender : req.Gender,
-            ethnicity : req.Ethnicity
+            FirstName: req.FirstName,
+            LastName: req.LastName,
+            MiddleName: req.MiddleName,
+            Email: req.Email,
+            Username: req.Username
         );
 
-          var personId = await _sender.Send(command);
+        var personId = await _sender.Send(command);
 
-        if (personId is not > 0)
+        if (string.IsNullOrEmpty(personId.ToString())) //ToDO: properly check if the guid is valid
             await SendAsync(
                     Results<CreateUserResponse>.ErrorResult(new("Internal Server Error")),
                     (int)HttpStatusCode.InternalServerError,
                     ct);
-            
+
         var successResult = Results<CreateUserResponse>
                             .SuccessResult(
-                                new(personId,"User Successfully Created"));
+                                new(personId, "User Successfully Created"));
 
         await SendAsync(
                 successResult,

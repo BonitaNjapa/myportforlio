@@ -1,26 +1,26 @@
-using Carter;
-using MediatR;
+// using Carter;
+// using MediatR;
 
-namespace portfolio.API.Features.PersonalInformation.GetPersonById
-{
-    public class Endpoint : ICarterModule
-    {
-        public void AddRoutes(IEndpointRouteBuilder app)
-        {
-            app.MapGet("/api/person/{id}", async (int id, ISender sender) =>
-            {
-                try
-                {
-                    var person = await sender.Send(new GetPersonByIdQuery(id));
-                    return Results.Ok(person);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    return Results.NotFound();
-                }
+// namespace portfolio.API.Features.PersonalInformation.GetPersonById
+// {
+//     public class Endpoint : ICarterModule
+//     {
+//         public void AddRoutes(IEndpointRouteBuilder app)
+//         {
+//             app.MapGet("/api/person/{id}", async (int id, ISender sender) =>
+//             {
+//                 try
+//                 {
+//                     var person = await sender.Send(new GetPersonByIdQuery(id));
+//                     return Results.Ok(person);
+//                 }
+//                 catch (Exception ex)
+//                 {
+//                     Console.WriteLine(ex.Message);
+//                     return Results.NotFound();
+//                 }
 
-            });
-        }
-    }
-}
+//             });
+//         }
+//     }
+// }
