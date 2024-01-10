@@ -1,5 +1,7 @@
 using Carter;
 using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
+using portfolio.API.Database;
 using portfolio.API.Helpers.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,6 @@ app.UseFastEndpoints();
 
 app.MapCarter();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", async (PortfolioDbContext dbContext) =>  Results.Ok(await dbContext.PersonalInfos.ToListAsync()));
 
 app.Run();
