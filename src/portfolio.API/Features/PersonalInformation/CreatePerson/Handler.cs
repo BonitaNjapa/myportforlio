@@ -5,14 +5,14 @@ using portfolio.API.Entities.PersonalInfo;
 namespace portfolio.API.Features.PersonalInformation.CreatePerson;
 
 
-internal sealed class Handler : IRequestHandler<CreateCommand, int>
+internal sealed class Handler : IRequestHandler<CreateUserCommand, int>
 {
     private readonly PortfolioDbContext _dbContext;
     public Handler(PortfolioDbContext dbContext)
     {
         _dbContext = dbContext;
     }
-    public async Task<int> Handle(CreateCommand req, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateUserCommand req, CancellationToken cancellationToken)
     {
         var person = new Person()
         {

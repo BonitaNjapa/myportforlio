@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace portfolio.API.Helpers
+namespace portfolio.API.Shared
 {
     public class DatabaseSettings
     {

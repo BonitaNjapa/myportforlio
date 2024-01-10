@@ -2,7 +2,7 @@ using Carter;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using portfolio.API.Database;
-using portfolio.API.Helpers.Extensions;
+using portfolio.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

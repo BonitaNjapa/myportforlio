@@ -1,7 +1,8 @@
 using portfolio.API.Database;
 using Microsoft.EntityFrameworkCore;
+using portfolio.API.Shared;
 
-namespace portfolio.API.Helpers.Extensions;
+namespace portfolio.API.Extensions;
 
 public static class WebappExtensions
 {
