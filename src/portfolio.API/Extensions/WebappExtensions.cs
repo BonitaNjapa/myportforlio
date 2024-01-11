@@ -15,7 +15,7 @@ public static class WebappExtensions
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.Database.Migrate();
-            Console.WriteLine($"{nameof(context)} is online!!!:)");
+            Console.WriteLine($"{context.Database.GetDbConnection().Database} is online!!!:)");
         }
         catch (Exception ex)
         {
