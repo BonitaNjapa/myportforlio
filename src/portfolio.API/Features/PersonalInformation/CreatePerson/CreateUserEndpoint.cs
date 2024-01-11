@@ -35,7 +35,8 @@ public class CreateUserEndpoint : Endpoint<CreateUserRequest, Results<CreateUser
 
         if (string.IsNullOrEmpty(personId.ToString())) //ToDO: properly check if the guid is valid
             await SendAsync(
-                    Results<CreateUserResponse>.ErrorResult(new("Internal Server Error")),
+                    Results<CreateUserResponse>.ErrorResult(new(
+                        "Internal Server Error")),
                     (int)HttpStatusCode.InternalServerError,
                     ct);
 
