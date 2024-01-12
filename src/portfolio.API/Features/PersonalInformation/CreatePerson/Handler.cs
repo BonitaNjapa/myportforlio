@@ -22,7 +22,7 @@ internal sealed class Handler : IRequestHandler<CreateUserCommand, Guid>
 
         await _dbContext.AddAsync(person, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-        return person.Id;
+        return person.Id; //ToDo: Return Result value instead!
     }
 
 
