@@ -3,29 +3,62 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using portfolio.API.Database;
 using portfolio.API.Extensions;
+using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var Configuration = builder.Configuration;
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateLogger();
 
-Configuration.AddEnvironmentBasedJsonFile(builder.Environment);
 
-builder.Services.AddFastEndpoints();
 
-builder.Services.AddCustomDbContext(configuration:Configuration);
+try
+{
+    Log.Information("Starting web application");
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+    builder.Host.UseSerilog();
     
-builder.Services.AddCarter();
 
-var app = builder.Build();
+    builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog());
 
-app.CheckDatabaseConnection();
+    builder.Services.AddSingleton(Log.Logger);
 
-app.UseFastEndpoints();
+    var Configuration = builder.Configuration;
 
-app.MapCarter();
+    Configuration.AddEnvironmentBasedJsonFile(builder.Environment,Log.Logger);
 
-app.MapGet("/", async (PortfolioDbContext dbContext) =>  Results.Ok(await dbContext.Users.ToListAsync()));
+    builder.Services.AddFastEndpoints();
 
-app.Run();
+    builder.Services.AddCustomDbContext(configuration: Configuration);
+
+    builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+    builder.Services.AddCarter();
+
+    var app = builder.Build();
+    
+    app.UseSerilogRequestLogging();
+    
+    app.CheckDatabaseConnection(Log.Logger);
+
+    app.UseFastEndpoints();
+
+    app.MapCarter();
+
+    app.MapGet("/", async (PortfolioDbContext dbContext) => Results.Ok(await dbContext.Users.ToListAsync()));
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+
+}
+finally
+{
+    Log.CloseAndFlush();
+}
