@@ -8,6 +8,6 @@ public sealed record CreateUserCommand(
      string FirstName,
      string LastName,
      string MiddleName,
-     string Email) : IRequest<Guid>
+     string Email) : IRequest<string>
 {
 }

@@ -1,6 +1,9 @@
 using portfolio.API.Database;
 using Microsoft.EntityFrameworkCore;
 using portfolio.API.Shared;
+using portfolio.API.Entities.User;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace portfolio.API.Extensions;
 
@@ -48,5 +51,20 @@ public static class ServiceCollectionExtensions
         var dbSettings = configuration.GetSection("ConnectionStrings:DefaultConnection").Get<DatabaseSettings>();
         services.AddDbContext<PortfolioDbContext>(options =>
         options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+       
+        services.AddIdentityAndProvidersToDb();
+        
+        services.ConfigureIdentityOptions();
+    }
+
+    public static void AddIdentityAndProvidersToDb(this IServiceCollection services) => 
+    services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<PortfolioDbContext>()
+    .AddDefaultTokenProviders();
+
+    public static void ConfigureIdentityOptions(this IServiceCollection services)
+    {
+        services.Configure<IdentityOptions>(options => {
+        });
     }
 }

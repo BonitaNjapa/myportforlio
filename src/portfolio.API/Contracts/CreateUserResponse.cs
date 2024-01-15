@@ -1,5 +1,5 @@
 namespace portfolio.API.Features.PersonalInformation.CreatePerson;
 
-public record CreateUserResponse(Guid PersonId, string Message)
+public record CreateUserResponse(string PersonId, string Message)
 {
 }

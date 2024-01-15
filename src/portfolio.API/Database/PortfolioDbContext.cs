@@ -2,11 +2,12 @@ namespace portfolio.API.Database;
 
 using Microsoft.EntityFrameworkCore;
 using portfolio.API.Entities.User;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-public class PortfolioDbContext : DbContext
+public class PortfolioDbContext : IdentityDbContext<User>
 {
     public PortfolioDbContext(DbContextOptions<PortfolioDbContext> options) : base(options) { }
-        public DbSet<User> Users { get; set; }
+        public override DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
