@@ -1,5 +1,7 @@
 using Carter;
 using FastEndpoints;
+using FastEndpoints.Security;
+
 using Microsoft.EntityFrameworkCore;
 using portfolio.API.Database;
 using portfolio.API.Extensions;
@@ -31,7 +33,10 @@ try
 
     Configuration.AddEnvironmentBasedJsonFile(builder.Environment,Log.Logger);
 
-    builder.Services.AddFastEndpoints();
+    builder.Services
+            .AddFastEndpoints()
+            .AddJWTBearerAuth("this is my custom Secret key for authentication")
+            .AddAuthorization();;
 
     builder.Services.AddCustomDbContext(configuration: Configuration);
 
@@ -45,7 +50,9 @@ try
     
     app.CheckDatabaseConnection(Log.Logger);
 
-    app.UseFastEndpoints();
+    app.UseAuthentication()
+        .UseAuthorization() 
+        .UseFastEndpoints();
 
     app.MapCarter();
 

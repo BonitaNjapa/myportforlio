@@ -7,3 +7,7 @@ public record class CreateUserRequest(string Username,
      string Email)
 {
 }
+public record class LoginRequest(string Username,
+     string Password)
+{
+}
