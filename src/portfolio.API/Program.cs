@@ -38,7 +38,7 @@ try
             .AddJWTBearerAuth("this is my custom Secret key for authentication")
             .AddAuthorization();;
 
-    builder.Services.AddCustomDbContext(configuration: Configuration);
+    builder.Services.AddCustomDbContext(configuration: Configuration,Log.Logger);
 
     builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
