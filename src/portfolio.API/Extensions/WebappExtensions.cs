@@ -15,7 +15,6 @@ public static class WebappExtensions
         {
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<PortfolioDbContext>();
-            logger.Information("");
             context.Database.EnsureDeleted();
             logger.Information("Ensure Database Deleted");
             context.Database.EnsureCreated();
