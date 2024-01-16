@@ -64,13 +64,17 @@ public class UserLoginEndpoint : Endpoint<LoginRequest>
         if (!string.IsNullOrEmpty(req.Username))
         {
 
-            (string claimType, string claimValue)[] claims = new (string, string)[1];
+            (string claimType, string claimValue)[] claims = new (string, string)[4];
             claims[0] = ("UserName", req.Username);
+            claims[1] = ("Reports", "ReadReport");
+            claims[2] = ("Reports", "WriteReport");
+            claims[3] = ("Reports", "DeleteReport");
+            
             
             var jwtToken = JWTBearer.CreateToken(
                 signingKey: "this is my custom Secret key for authentication",
                 expireAt: DateTime.UtcNow.AddDays(1),
-                permissions: new List<string> { "ManageUsers", "ManageInventory" },
+                permissions: new List<string> { "ManageUsers", "ManageInventory", "ReadReport","WriteReport","DeleteReport"},
                 roles: new List<string> { "Manager" },
                 claims: claims
             );
@@ -87,10 +91,3 @@ public class UserLoginEndpoint : Endpoint<LoginRequest>
         }
     }
 }
-
-//  new()
-//                
-//                 claims: new()
-//                 {
-//                     new("UserName", req.Username)
-//                 }
