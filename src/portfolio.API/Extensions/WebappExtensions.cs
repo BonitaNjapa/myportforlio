@@ -46,25 +46,23 @@ public static class WebappExtensions
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
-    {
-        var dbSettings = configuration.GetSection("ConnectionStrings:DefaultConnection").Get<DatabaseSettings>();
+    public static void AddCustomDbContext(this IServiceCollection services, IConfiguration configuration,Serilog.ILogger logger)
+    {                            
         services.AddDbContext<PortfolioDbContext>(options =>
-        options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(configuration
+                            .GetConnectionString("DefaultConnection")));
        
         services.AddIdentityAndProvidersToDb();
         
         services.ConfigureIdentityOptions();
     }
 
-    public static void AddIdentityAndProvidersToDb(this IServiceCollection services) => 
-    services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<PortfolioDbContext>()
-    .AddDefaultTokenProviders();
+    public static void AddIdentityAndProvidersToDb(this IServiceCollection services) 
+        => services.AddIdentity<User, IdentityRole>()
+            .AddEntityFrameworkStores<PortfolioDbContext>()
+            .AddDefaultTokenProviders();
 
     public static void ConfigureIdentityOptions(this IServiceCollection services)
-    {
-        services.Configure<IdentityOptions>(options => {
-        });
-    }
+        => services.Configure<IdentityOptions>(options => {});
+    
 }
