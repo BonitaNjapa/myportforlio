@@ -2,7 +2,6 @@ using portfolio.API.Database;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using FastEndpoints;
-using Carter;
 
 namespace portfolio.API.Extensions;
 
@@ -49,7 +48,6 @@ public static class WebappExtensions
             .UseAuthorization() 
             .UseFastEndpoints();
         
-        app.MapCarter();
         app.MapGet("/", async (PortfolioDbContext dbContext) => Results.Ok(await dbContext.Users.ToListAsync()));
 
     }

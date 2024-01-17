@@ -6,7 +6,6 @@ using Serilog;
 using FastEndpoints;
 using FastEndpoints.Security;
 using System.Reflection;
-using Carter;
 using portfolio.API.Shared;
 
 namespace portfolio.API.Extensions;
@@ -58,6 +57,5 @@ public static class ServiceCollectionExtensions
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         
-        services.AddCarter();//ToDO: remove the package as it wont be used anymore!
     }
 }
