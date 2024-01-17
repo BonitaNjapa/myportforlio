@@ -1,9 +1,8 @@
 using portfolio.API.Database;
 using Microsoft.EntityFrameworkCore;
-using portfolio.API.Shared;
-using portfolio.API.Entities.User;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+using Serilog;
+using FastEndpoints;
+using Carter;
 
 namespace portfolio.API.Extensions;
 
@@ -30,7 +29,7 @@ public static class WebappExtensions
             Environment.Exit(1);
         }
     }
-    public static void AddEnvironmentBasedJsonFile(this IConfigurationBuilder configurationBuilder, IWebHostEnvironment environment,Serilog.ILogger logger)
+    public static void AddEnvironmentBasedJsonFile(this IConfigurationBuilder configurationBuilder, IWebHostEnvironment environment, Serilog.ILogger logger)
     {
         if (environment.IsDevelopment())
         {
@@ -41,27 +40,17 @@ public static class WebappExtensions
         else
             configurationBuilder.AddJsonFile("appsettings.json", optional: false);
     }
-}
-
-public static class ServiceCollectionExtensions
-{
-    public static void AddCustomDbContext(this IServiceCollection services, IConfiguration configuration,Serilog.ILogger logger)
-    {                            
-        services.AddDbContext<PortfolioDbContext>(options =>
-            options.UseNpgsql(configuration
-                            .GetConnectionString("DefaultConnection")));
-       
-        services.AddIdentityAndProvidersToDb();
+    public static void ConfigureAppExtensions(this WebApplication app)
+    {
+        app.UseSerilogRequestLogging();
+        app.CheckDatabaseConnection(Log.Logger);
+         
+        app.UseAuthentication()
+            .UseAuthorization() 
+            .UseFastEndpoints();
         
-        services.ConfigureIdentityOptions();
+        app.MapCarter();
+        app.MapGet("/", async (PortfolioDbContext dbContext) => Results.Ok(await dbContext.Users.ToListAsync()));
+
     }
-
-    public static void AddIdentityAndProvidersToDb(this IServiceCollection services) 
-        => services.AddIdentity<User, IdentityRole>()
-            .AddEntityFrameworkStores<PortfolioDbContext>()
-            .AddDefaultTokenProviders();
-
-    public static void ConfigureIdentityOptions(this IServiceCollection services)
-        => services.Configure<IdentityOptions>(options => {});
-    
 }
