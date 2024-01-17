@@ -31,20 +31,19 @@ public static class ServiceCollectionExtensions
     public static void ConfigureIdentityOptions(this IServiceCollection services)
         => services.Configure<IdentityOptions>(options => {});
     
-    public static void AddServicesInheritingFrom<TBaseType>(this IServiceCollection services, Assembly assembly)
+    public static void AddServicesInheritingFrom<ISingletonService>(this IServiceCollection services,Assembly assembly)
     {
         var serviceTypes = assembly.GetExportedTypes()
-            .Where(type => type.IsClass && typeof(TBaseType).IsAssignableFrom(type));
+            .Where(type => type.IsClass && typeof(ISingletonService).IsAssignableFrom(type));
 
         foreach (var serviceType in serviceTypes)
-        {
-            services.AddSingleton(typeof(TBaseType), serviceType);
-        }
+            services.AddSingleton(typeof(ISingletonService), serviceType);        
     }
-    public static void ConfigureServices(this IServiceCollection services,IConfiguration configuration)
+    public static void ConfigureServices(this IServiceCollection services,IConfiguration configuration,Assembly assembly)
     {
         services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog());
         services.AddSingleton(Log.Logger);
+        services.AddServicesInheritingFrom<IServiceCollection>(assembly);
 
         services
             .AddFastEndpoints()

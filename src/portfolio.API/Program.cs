@@ -22,7 +22,7 @@ try
 
     Configuration.AddEnvironmentBasedJsonFile(builder.Environment,Log.Logger);
 
-    builder.Services.ConfigureServices(Configuration);
+    builder.Services.ConfigureServices(Configuration,typeof(Program).Assembly);
 
     var app = builder.Build();
 
