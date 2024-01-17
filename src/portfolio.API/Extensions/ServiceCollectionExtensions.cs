@@ -7,6 +7,7 @@ using FastEndpoints;
 using FastEndpoints.Security;
 using System.Reflection;
 using Carter;
+using portfolio.API.Shared;
 
 namespace portfolio.API.Extensions;
 
@@ -31,19 +32,22 @@ public static class ServiceCollectionExtensions
     public static void ConfigureIdentityOptions(this IServiceCollection services)
         => services.Configure<IdentityOptions>(options => {});
     
-    public static void AddServicesInheritingFrom<ISingletonService>(this IServiceCollection services,Assembly assembly)
+    public static void AddServicesInheritingFrom<TBase>(this IServiceCollection services,Assembly assembly,Serilog.ILogger logger)
     {
         var serviceTypes = assembly.GetExportedTypes()
-            .Where(type => type.IsClass && typeof(ISingletonService).IsAssignableFrom(type));
+            .Where(type => type.IsClass && typeof(TBase).IsAssignableFrom(type));
 
         foreach (var serviceType in serviceTypes)
-            services.AddSingleton(typeof(ISingletonService), serviceType);        
+            services.AddSingleton(typeof(TBase), serviceType);
+
+        logger.Information($"Added {serviceTypes.Count()} Services Inheriting From {typeof(TBase).Name}");
+
     }
-    public static void ConfigureServices(this IServiceCollection services,IConfiguration configuration,Assembly assembly)
+    public static void ConfigureServices(this IServiceCollection services,IConfiguration configuration,Assembly assembly,Serilog.ILogger logger)
     {
         services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog());
         services.AddSingleton(Log.Logger);
-        services.AddServicesInheritingFrom<IServiceCollection>(assembly);
+        services.AddServicesInheritingFrom<ISingletonService>(assembly,logger);
 
         services
             .AddFastEndpoints()
@@ -55,7 +59,5 @@ public static class ServiceCollectionExtensions
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         
         services.AddCarter();//ToDO: remove the package as it wont be used anymore!
-
-
     }
 }
