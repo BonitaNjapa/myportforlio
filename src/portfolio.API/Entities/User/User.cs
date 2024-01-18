@@ -1,18 +1,15 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using portfolio.API.Entities.BaseEntity;
-
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
 namespace portfolio.API.Entities.User;
 
 
-[Table(name:"Users")]
+[Table(name: "Users")]
 public class User : IdentityUser
 {
     public User()
     {
-        
+
     }
     public required string FirstName { get; set; }
     public required string LastName { get; set; }

@@ -1,15 +1,13 @@
-using System.Net;
 using FastEndpoints;
-using FastEndpoints.Security;
 using MediatR;
 using portfolio.API.Contracts;
-using portfolio.API.Shared;
 
 namespace portfolio.API.Features.Auth.Register;
 
-public class RegisterUserEndpoint : Endpoint<RegisterUserRequest, Results<CreateUserResponse>>
+public class RegisterUserEndpoint : Endpoint<RegisterUserRequest, string>
 {
     private ISender _sender;
+
 
     public RegisterUserEndpoint(ISender sender)
     {
@@ -32,23 +30,9 @@ public class RegisterUserEndpoint : Endpoint<RegisterUserRequest, Results<Create
             Username: req.Username
         );
 
-        var personId = await _sender.Send(command);
+        var result = await _sender.Send(command);
 
-        if (string.IsNullOrEmpty(personId.ToString())) //ToDO: properly check if the guid is valid
-            await SendAsync(
-                    Results<CreateUserResponse>.ErrorResult(new(
-                        "Internal Server Error")),
-                    (int)HttpStatusCode.InternalServerError,
-                    ct);
-
-        var successResult = Results<CreateUserResponse>
-                            .SuccessResult(
-                                new(personId, "User Successfully Created"));
-
-        await SendAsync(
-                successResult,
-                (int)HttpStatusCode.Created,
-                ct);
+        await SendAsync(result);
     }
 }
 // public class UserLoginEndpoint : Endpoint<LoginRequest>

@@ -37,7 +37,7 @@ public static class ServiceCollectionExtensions
             .Where(type => type.IsClass && typeof(TBase).IsAssignableFrom(type));
 
         foreach (var serviceType in serviceTypes)
-            services.AddSingleton(typeof(TBase), serviceType);
+            services.AddScoped(typeof(TBase), serviceType);
 
         logger.Information($"Added {serviceTypes.Count()} Services Inheriting From {typeof(TBase).Name}");
 
