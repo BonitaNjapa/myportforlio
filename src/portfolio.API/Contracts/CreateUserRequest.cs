@@ -1,6 +1,6 @@
-namespace portfolio.API.Features.PersonalInformation.CreatePerson;
+namespace portfolio.API.Contracts;
 
-public record class CreateUserRequest(string Username,
+public record class RegisterUserRequest(string Username,
      string FirstName,
      string LastName,
      string MiddleName,

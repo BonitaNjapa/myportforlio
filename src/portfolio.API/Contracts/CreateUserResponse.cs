@@ -1,4 +1,4 @@
-namespace portfolio.API.Features.PersonalInformation.CreatePerson;
+namespace portfolio.API.Contracts;
 
 public record CreateUserResponse(string PersonId, string Message)
 {

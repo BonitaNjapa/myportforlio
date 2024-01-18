@@ -1,8 +1,9 @@
 using FastEndpoints;
 using FluentValidation;
+using portfolio.API.Contracts;
 
-namespace portfolio.API.Features.PersonalInformation.CreatePerson;
-public class Validator : Validator<CreateUserRequest>
+namespace portfolio.API.Features.Auth.Register;
+public class Validator : Validator<RegisterUserRequest>
 {
     public Validator()
     {

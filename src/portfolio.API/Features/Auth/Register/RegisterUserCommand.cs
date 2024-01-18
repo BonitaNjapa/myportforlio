@@ -1,9 +1,9 @@
 using MediatR;
 
-namespace portfolio.API.Features.PersonalInformation;
+namespace portfolio.API.Features.Auth.Register;
 
 
-public sealed record CreateUserCommand(
+public sealed record RegisterUserCommand(
      string Username,
      string FirstName,
      string LastName,
