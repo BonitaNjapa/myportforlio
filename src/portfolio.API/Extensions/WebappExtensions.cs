@@ -2,6 +2,7 @@ using portfolio.API.Database;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using FastEndpoints;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 
 namespace portfolio.API.Extensions;
 
@@ -43,12 +44,28 @@ public static class WebappExtensions
     {
         app.UseSerilogRequestLogging();
         app.CheckDatabaseConnection(Log.Logger);
-         
+
         app.UseAuthentication()
-            .UseAuthorization() 
+            .UseAuthorization()
             .UseFastEndpoints();
-        
-        app.MapGet("/", async (PortfolioDbContext dbContext) => Results.Ok(await dbContext.Users.ToListAsync()));
+
+        app.UseStaticFiles();
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseSpaStaticFiles();
+        }
+
+        app.UseSpa(spa =>
+        {
+            spa.Options.SourcePath = "ClientApp";
+
+            if (app.Environment.IsDevelopment())
+            {
+                spa.UseAngularCliServer(npmScript: "start");
+                //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+            }
+        });
+
 
     }
 }

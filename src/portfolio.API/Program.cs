@@ -1,6 +1,8 @@
 using portfolio.API.Extensions;
 using Serilog;
 using Serilog.Events;
+using Microsoft.AspNetCore.SpaServices;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,11 +22,14 @@ try
 
     var Configuration = builder.Configuration;
 
-    Configuration.AddEnvironmentBasedJsonFile(builder.Environment,Log.Logger);
+    Configuration.AddEnvironmentBasedJsonFile(builder.Environment, Log.Logger);
 
-    builder.Services.ConfigureServices(Configuration,typeof(Program).Assembly,Log.Logger);
+    builder.Services.ConfigureServices(Configuration, typeof(Program).Assembly, Log.Logger);
+    
+    
 
     var app = builder.Build();
+
 
     app.ConfigureAppExtensions();
 
