@@ -58,11 +58,10 @@ public static class WebappExtensions
         app.UseSpa(spa =>
         {
             spa.Options.SourcePath = "ClientApp";
-
+            spa.Options.DevServerPort = 4300;
             if (app.Environment.IsDevelopment())
             {
                 spa.UseAngularCliServer(npmScript: "start");
-                //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
             }
         });
 
