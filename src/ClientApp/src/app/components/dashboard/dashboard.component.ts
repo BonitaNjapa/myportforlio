@@ -23,17 +23,8 @@ export class DashboardComponent {
   stats : Stat[] = [];
 
   constructor(private http: HttpClient) {
-    this.http.get<Stat[]>('/api/stats').subscribe((data: Stat[]) => {
+    this.http.get<Stat[]>('/stats').subscribe((data: Stat[]) => {
       this.stats = data;
     });
-
-    // const initStats = 
-    // [
-    //     { name: 'Budget',      iconBg: "icon icon-shape bg-danger text-white text-lg rounded-circle", icon: "bi bi-credit-card",    value: '$750.90' },
-    //     { name: 'New projects',iconBg: "icon icon-shape bg-primary text-white text-lg rounded-circle",icon: "bi bi-people",         value: '215' },
-    //     { name: 'Total hours', iconBg: "icon icon-shape bg-info text-white text-lg rounded-circle",   icon: "bi bi-clock-history",  value: '1.400' },
-    //     { name: 'Work load',   iconBg: "icon icon-shape bg-warning text-white text-lg rounded-circle",icon: "bi bi-minecart-loaded",value: '95%' },
-    // ];
-    // this.stats = initStats
   }  
 }

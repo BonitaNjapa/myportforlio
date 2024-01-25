@@ -48,16 +48,13 @@ public static class WebappExtensions
         app.UseAuthentication()
             .UseAuthorization()
             .UseFastEndpoints();
-
-        // app.UseStaticFiles();
-        if (!app.Environment.IsDevelopment())
-        {
-            app.UseSpaStaticFiles();
-        }
+        
+        
+        app.UseSpaStaticFiles();
 
         // app.UseSpa(spa =>
         // {
-        //     spa.Options.SourcePath = "ClientApp";
+        //     spa.Options.SourcePath = "../../ClientApp";
         //     spa.Options.DevServerPort = 4300;
         //     if (app.Environment.IsDevelopment())
         //     {
@@ -65,8 +62,8 @@ public static class WebappExtensions
         //     }
         // });
 
-       
+
     }
 
-    
+
 }
