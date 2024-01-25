@@ -49,22 +49,24 @@ public static class WebappExtensions
             .UseAuthorization()
             .UseFastEndpoints();
 
-        app.UseStaticFiles();
+        // app.UseStaticFiles();
         if (!app.Environment.IsDevelopment())
         {
             app.UseSpaStaticFiles();
         }
 
-        app.UseSpa(spa =>
-        {
-            spa.Options.SourcePath = "ClientApp";
-            spa.Options.DevServerPort = 4300;
-            if (app.Environment.IsDevelopment())
-            {
-                spa.UseAngularCliServer(npmScript: "start");
-            }
-        });
+        // app.UseSpa(spa =>
+        // {
+        //     spa.Options.SourcePath = "ClientApp";
+        //     spa.Options.DevServerPort = 4300;
+        //     if (app.Environment.IsDevelopment())
+        //     {
+        //         spa.UseAngularCliServer(npmScript: "start");
+        //     }
+        // });
 
-
+       
     }
+
+    
 }
